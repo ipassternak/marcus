@@ -1,0 +1,31 @@
+{
+  "name": "marcus",
+  "version": "0.0.1",
+  "description": "A Command Line Interface (CLI) Application for Compiling and Manipulating Markdown",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint",
+    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.ts\"",
+    "fmt": "prettier --write \"**/*.js\" \"**/*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipassternak/marcus.git"
+  },
+  "keywords": [
+    "markdown",
+    "cli"
+  ],
+  "author": "Ivan Pasternak <retriumpf@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ipassternak/marcus/issues"
+  },
+  "homepage": "https://github.com/ipassternak/marcus#readme",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5"
+  }
+}
