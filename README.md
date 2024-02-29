@@ -12,6 +12,7 @@ Marcus is a Command Line Interface (CLI) application for compiling and manipulat
   - [Usage](#usage)
   - [Help](#help)
   - [Alternative Startup](#alternative-startup)
+- [Testing](#testing)
 - [Features](#features)
 - [Usage Examples](#usage-examples)
 - [Contributing](#contributing)
@@ -85,6 +86,20 @@ Here are some examples of how you can use Marcus in your workflow:
    ```shell
    marcus document.md --out /path/to/save
    ```
+
+## Testing
+
+To run the tests for this project, execute the following command in your terminal:
+
+```shell
+npm test
+```
+
+For development, it's recommended to use the interactive version with the following command:
+
+```shell
+npm run test:dev
+```
 
 ## Contributing
 
