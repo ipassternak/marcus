@@ -1,6 +1,6 @@
 'use strict';
 
-const { compileHTML } = require('../lib/core/compiler.js');
+const { compileHTML, compileANSI } = require('../lib/core/compiler.js');
 
 const italic = '_italic_';
 const bold = '**bold**';
@@ -74,5 +74,55 @@ console.log(a + b); </pre></p>`;
   });
   test('does not compile nested tokens', () => {
     expect(() => compileHTML(nested)).toThrow();
+  });
+});
+
+describe('ANSI compilation', () => {
+  test('can compile italic', () => {
+    const expected = '\u001b[3mitalic\u001b[23m';
+    expect(compileANSI(italic)).toBe(expected);
+  });
+  test('can compile bold', () => {
+    const expected = '\u001b[1mbold\u001b[22m';
+    expect(compileANSI(bold)).toBe(expected);
+  });
+  test('can compile monospaced', () => {
+    const expected = '\u001b[7mmonospaced\u001b[27m';
+    expect(compileANSI(monospaced)).toBe(expected);
+  });
+  test('can compile paragraph', () => {
+    const expected = 'paragraph1\n\nparagraph2';
+    expect(compileANSI(paragraph)).toBe(expected);
+  });
+  test('can compile preformatted', () => {
+    const expected = '\u001b[7mpreformatted\u001b[27m';
+    expect(compileANSI(preformatted)).toBe(expected);
+  });
+  test('can compile complex HTML', () => {
+    // eslint-disable-next-line quotes
+    const expected = `\
+This is a \u001b[1mbold\u001b[22m text.\n\n\
+This is an \u001b[3mitalic\u001b[23m text.\n\n\
+This is a \u001b[7mmonospaced\u001b[27m text.\n\n\
+Here is a preformatted text: \u001b[7m const a = 1;
+
+const b = 2;
+
+console.log(a + b); \u001b[27m`;
+    expect(compileANSI(complex)).toBe(expected);
+  });
+  test('can compile empty string', () => {
+    expect(compileANSI('')).toBe('');
+  });
+  test('does not compile unpaired tokens', () => {
+    expect(() => compileANSI(leftBold)).toThrow();
+    expect(() => compileANSI(rightBold)).toThrow();
+    expect(() => compileANSI(leftItalic)).toThrow();
+    expect(() => compileANSI(rightItalic)).toThrow();
+    expect(() => compileANSI(leftMonospaced)).toThrow();
+    expect(() => compileANSI(unpairedPreformatted)).toThrow();
+  });
+  test('does not compile nested tokens', () => {
+    expect(() => compileANSI(nested)).toThrow();
   });
 });
