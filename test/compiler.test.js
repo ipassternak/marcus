@@ -1,6 +1,9 @@
 'use strict';
 
-const { compileHTML, compileANSI } = require('../lib/core/compiler.js');
+const compiler = require('../lib/core/compiler.js');
+
+const compileHTML = compiler.html;
+const compileANSI = compiler.ansi;
 
 const italic = '_italic_';
 const bold = '**bold**';

@@ -1,6 +1,6 @@
 'use strict';
 
-const { Command } = require('commander');
+const { Command, Option } = require('commander');
 const pkg = require('./package.json');
 
 const program = new Command();
@@ -16,7 +16,17 @@ program
 program.argument('<input>', 'specify the input file location');
 
 // Options
-program.option('-o, --out <output>', 'specify the output file location');
+program
+  .option('-o, --out [output]', 'specify the output file location')
+  .addOption(
+    new Option('-f, --format [format]', 'specify the output format').choices([
+      'ansi',
+      'html',
+    ]),
+  )
+  .action((_, opts) => {
+    if (!opts.format) opts.format = opts.out ? 'html' : 'ansi';
+  });
 
 // Parse the command line parameters
 program.parse();

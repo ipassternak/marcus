@@ -2,7 +2,7 @@
 
 const config = require('./config.js');
 const io = require('./lib/io/index.js');
-const { compileHTML } = require('./lib/core/compiler.js');
+const compiler = require('./lib/core/compiler.js');
 
 const getSrc = async (input) => {
   const src = await io.fs.read(input);
@@ -18,7 +18,8 @@ const outputResult = async (dist, data) => {
   try {
     const [input] = args;
     const src = await getSrc(input);
-    const res = compileHTML(src);
+    const compile = compiler[opts.format];
+    const res = compile(src);
     await outputResult(opts.out, res);
   } catch (err) {
     // Fatal process exit
